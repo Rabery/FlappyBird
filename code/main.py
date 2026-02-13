@@ -1,6 +1,6 @@
 import pygame, time
 from settings import *
-from sprites import BG
+from sprites import Background, Ground
 
 class Game:
 	def __init__(self):
@@ -9,10 +9,14 @@ class Game:
 		pygame.display.set_caption("Flappy Bird")
 		self.clock = pygame.time.Clock()
 
+		background = pygame.image.load("../graphics/environment/background.png").convert()
+		scaleFactor = WINDOW_HEIGHT / background.get_height()
+
 		self.allGroup = pygame.sprite.Group()
 		self.collideGroup = pygame.sprite.Group()
 
-		self.background = BG(self.allGroup)
+		self.background = Background(self.allGroup, scaleFactor)
+		self.ground = Ground(self.allGroup, scaleFactor)
 	
 	def run(self):
 		lastTime = time.time()
