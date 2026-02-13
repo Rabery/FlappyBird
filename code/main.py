@@ -1,6 +1,6 @@
 import pygame, time
 from settings import *
-from sprites import Background, Ground
+from sprites import Background, Ground, Plane
 
 class Game:
 	def __init__(self):
@@ -17,6 +17,10 @@ class Game:
 
 		self.background = Background(self.allGroup, scaleFactor)
 		self.ground = Ground(self.allGroup, scaleFactor)
+		self.plane = Plane(self.allGroup, scaleFactor/2)
+
+		self.obstacleTimer = pygame.USEREVENT + 1
+		pygame.time.set_timer(self.obstacleTimer)
 	
 	def run(self):
 		lastTime = time.time()
@@ -29,6 +33,8 @@ class Game:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					running = False
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					self.plane.jump()
 			
 			self.screen.fill("black")
 			self.allGroup.update(dt)
